@@ -291,7 +291,6 @@ class Sidebar extends Component {
             deviceAttrsTitle,
         } = this.state;
         if (!Object.prototype.hasOwnProperty.call(device, 'attrs')) return <div />;
-        console.log(isNewDevice)
         const { metadata } = device;
         return (
             <Fragment>
