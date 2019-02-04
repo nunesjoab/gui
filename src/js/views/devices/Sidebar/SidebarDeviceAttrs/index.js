@@ -39,7 +39,7 @@ const SidebarDeviceAttrs = ({
                             </div>
                             <div className="attrs-list">
                                 {
-                                    selectAttr.map(attr =>
+                                    selectAttr.map(attr => (
                                         <AttrCard
                                             attr={attr}
                                             key={attr.id}
@@ -47,7 +47,8 @@ const SidebarDeviceAttrs = ({
                                             handleChangeAttr={handleChangeAttr}
                                             handleChangeMetadata={handleChangeMetadata}
                                             errors={errors[attr.id]}
-                                        />)
+                                        />
+                                    ))
                                 }
                             </div>
                         </div>
@@ -79,7 +80,11 @@ SidebarDeviceAttrs.propTypes = {
     showDeviceAttrs: PropTypes.bool,
     isNewDevice: PropTypes.bool.isRequired,
     validAttrs: PropTypes.func.isRequired,
+    handleShowDeviceAttrs: PropTypes.func.isRequired,
+    handleChangeMetadata: PropTypes.func.isRequired,
+    handleChangeAttr: PropTypes.func.isRequired,
     label: PropTypes.string,
+    deviceAttrsTitle: PropTypes.string.isRequired,
 };
 
 export default SidebarDeviceAttrs;
