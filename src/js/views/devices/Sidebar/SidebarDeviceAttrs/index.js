@@ -72,11 +72,14 @@ const SidebarDeviceAttrs = ({
 
 SidebarDeviceAttrs.defaultProps = {
     showDeviceAttrs: false,
+    label: 'MANAGE ATTRIBUTES',
 };
 
 SidebarDeviceAttrs.propTypes = {
     showDeviceAttrs: PropTypes.bool,
+    isNewDevice: PropTypes.bool.isRequired,
     validAttrs: PropTypes.func.isRequired,
+    label: PropTypes.string,
 };
 
 export default SidebarDeviceAttrs;
