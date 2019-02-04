@@ -7,6 +7,8 @@ import AttrCard from './AttrCard';
 const SidebarDeviceAttrs = ({
     showDeviceAttrs,
     validAttrs,
+    label,
+    isNewDevice,
     handleShowDeviceAttrs,
     selectAttr,
     metadata,
@@ -22,7 +24,7 @@ const SidebarDeviceAttrs = ({
                     <div className="sidebar-device-attrs">
                         <div className="header">
                             <div className="title">
-                                {'Manage Attributes'}
+                                {isNewDevice ? 'MANAGE ATTRIBUTES' : label }
                             </div>
                             <div className="icon">
                                 <img src="images/icons/chip-cyan.png" alt="device-icon" />
