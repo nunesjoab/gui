@@ -7,6 +7,8 @@ import AttrCard from './AttrCard';
 const SidebarDeviceAttrs = ({
     showDeviceAttrs,
     validAttrs,
+    label,
+    isNewDevice,
     handleShowDeviceAttrs,
     selectAttr,
     metadata,
@@ -22,7 +24,7 @@ const SidebarDeviceAttrs = ({
                     <div className="sidebar-device-attrs">
                         <div className="header">
                             <div className="title">
-                                {'Manage Attributes'}
+                                {isNewDevice ? 'MANAGE ATTRIBUTES' : label }
                             </div>
                             <div className="icon">
                                 <img src="images/icons/chip-cyan.png" alt="device-icon" />
@@ -37,7 +39,7 @@ const SidebarDeviceAttrs = ({
                             </div>
                             <div className="attrs-list">
                                 {
-                                    selectAttr.map(attr =>
+                                    selectAttr.map(attr => (
                                         <AttrCard
                                             attr={attr}
                                             key={attr.id}
@@ -45,7 +47,8 @@ const SidebarDeviceAttrs = ({
                                             handleChangeAttr={handleChangeAttr}
                                             handleChangeMetadata={handleChangeMetadata}
                                             errors={errors[attr.id]}
-                                        />)
+                                        />
+                                    ))
                                 }
                             </div>
                         </div>
@@ -70,11 +73,18 @@ const SidebarDeviceAttrs = ({
 
 SidebarDeviceAttrs.defaultProps = {
     showDeviceAttrs: false,
+    label: 'MANAGE ATTRIBUTES',
 };
 
 SidebarDeviceAttrs.propTypes = {
     showDeviceAttrs: PropTypes.bool,
+    isNewDevice: PropTypes.bool.isRequired,
     validAttrs: PropTypes.func.isRequired,
+    handleShowDeviceAttrs: PropTypes.func.isRequired,
+    handleChangeMetadata: PropTypes.func.isRequired,
+    handleChangeAttr: PropTypes.func.isRequired,
+    label: PropTypes.string,
+    deviceAttrsTitle: PropTypes.string.isRequired,
 };
 
 export default SidebarDeviceAttrs;

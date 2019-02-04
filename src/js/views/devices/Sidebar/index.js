@@ -320,6 +320,8 @@ class Sidebar extends Component {
                     selectAttr={selectAttr}
                     metadata={metadata}
                     deviceAttrsTitle={deviceAttrsTitle}
+                    label={device.label}
+                    isNewDevice={isNewDevice}
                     validAttrs={this.validAttrs}
                     handleChangeMetadata={this.handleChangeMetadata}
                     handleChangeAttr={this.handleChangeAttr}
