@@ -54,7 +54,7 @@ SideBarRight.propTypes = {
     visible: PropTypes.bool,
     title: PropTypes.string.isRequired,
     buttonsFooter: PropTypes.shape.isRequired,
-    content: PropTypes.shape.isRequired,
+    content: PropTypes.instanceOf(Object).isRequired,
 };
 
 SideBarRight.defaultProps = {
