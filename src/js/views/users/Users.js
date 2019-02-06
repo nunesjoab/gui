@@ -4,11 +4,10 @@ import ReactDOM from 'react-dom';
 import AltContainer from 'alt-container';
 import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import { NewPageHeader } from '../../containers/full/PageHeader';
-import { SimpleFilter } from '../utils/Manipulation';
 import MaterialSelect from '../../components/MaterialSelect';
-import AutheticationFailed from '../../components/AuthenticationFailed';
 import LoginStore from '../../stores/LoginStore';
 import UserActions from '../../actions/UserActions';
+import GroupActions from '../../actions/GroupActions';
 import toaster from '../../comms/util/materialize';
 import { RemoveModal } from '../../components/Modal';
 import UserStore from '../../stores/UserStore';
@@ -28,7 +27,7 @@ class SideBar extends Component {
         service: 'admin'
       },
       show_modal: false,
-      confirmEmail: "",
+            confirmEmail: '',
       isInvalid: {
         username: false,
         name: false,
@@ -67,9 +66,7 @@ class SideBar extends Component {
   }
 
   loadUsers() {
-    //if (this.props.user.profile === 'admin') {
       UserActions.fetchUsers.defer();
-    //}
   }
 
   checkValidation() {
@@ -130,7 +127,6 @@ class SideBar extends Component {
     if (this.checkValidation()) {
       const temp = this.state.user;
       temp.email = String(temp.email).toLowerCase();
-      // console.log('User to be created: ', temp);
       UserActions.addUser(
         temp,
         () => {
@@ -140,7 +136,8 @@ class SideBar extends Component {
         (user) => {
           this.formUser(user);
         },
-      )}
+            );
+        }
     }
 
 
@@ -158,7 +155,7 @@ class SideBar extends Component {
     this.props.hide();
     this.loadUsers();
   }
-    
+
 
     handleDelete() {
         this.setState({ show_modal: true });
@@ -327,17 +324,17 @@ class SideBar extends Component {
                                 name="profile"
                                 value={this.state.user.profile}
                                 onChange={this.handleChange}
-                                isDisable={this.props.edit}
+                                isDisable={this.props.edit ||this.state.user.username === 'admin'}
                             >
                                 <option value="" disabled>
                   Choose your option
                                 </option>
-                                <option value="admin" id="adm-option">
-                  Administrator
+                                {this.props.groups.map(obj => (
+                                    <option value={obj.name} id={obj.name + '-option'}
+                                            key={obj.name + '-option'}>
+                                        {obj.name}
                                 </option>
-                                <option value="user" id="user-option">
-                  User
-                                </option>
+                                ))}
                             </MaterialSelect>
                         </div>
                     </div>
@@ -367,7 +364,8 @@ class SideBar extends Component {
                             title="Delete User"
                             onClick={this.handleDelete}
                         >
-                            <span className="text center-text-child">delete</span>
+                            <span className="text center-text-child"
+                                  style={this.state.user.username === 'admin' ? { display: 'none' } : {}}>delete</span>
                         </div>
                     </div>
 
@@ -459,7 +457,7 @@ function SummaryItem(props) {
                             <input
                                 className="truncate"
                                 type="text"
-                                value={props.user.profile === 'admin' ? 'Administrator' : 'User'}
+                                value={props.user.profile}
                                 disabled
                             />
                             <span>Profile</span>
@@ -634,7 +632,10 @@ class UserList extends Component {
     render() {
         return (
             <div className="fill">
-                <SideBar {...this.state} hide={this.hideSideBar} visible={this.props.visible} formUser={this.formUser}/>
+                <AltContainer store={UserStore}>
+                    <SideBar {...this.state} hide={this.hideSideBar} visible={this.props.visible}
+                             formUser={this.formUser}/>
+                </AltContainer>
                 <RemoveDialog callback={this.deleteUser} target="confirmDiag"/>
                 <div id="user-wrapper" className="col s12  lst-wrapper scroll-bar">
                     {this.props.values.map(user => (
@@ -726,14 +727,12 @@ class UsersContent extends Component {
     }
 
     componentDidMount() {
-        //if (this.props.user.profile === 'admin') {
             UserActions.fetchUsers.defer();
-        //}
+        GroupActions.fetchGroups.defer();
     }
 
     render() {
-        // console.log('entrou até aqui. ');
-        if (this.props.user.profile === 'admin') {
+
             return (
                 <span id="userMain">
                     <AltContainer store={UserStore}>
@@ -744,12 +743,7 @@ class UsersContent extends Component {
                     </AltContainer>
                 </span>
             );
-        }
-        return (
-            <span id="userMain" className="flex-wrapper">
-                <AutheticationFailed />
-            </span>
-        );
+
     }
 }
 
