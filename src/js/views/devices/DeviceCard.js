@@ -16,7 +16,6 @@ import { FormActions } from "./Actions";
 
 function SummaryItem(props) {
     let attrs = 0;
-    console.log('SummaryItem', props);
     for (const attribute in props.device.attrs) {
         attrs += props.device.attrs[attribute].length;
     }
