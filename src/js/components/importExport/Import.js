@@ -72,9 +72,13 @@ class Import extends Component {
                     this.success(true);
                 } catch (err) {
                     toaster.error(t('importExport:import.error.read'));
-                    this.openModal(false);
+                    setTimeout(() => {
+                        this.openModal(false);
+                    }, 5000);
                 }
-            this.showLoading(false);
+                setTimeout(() => {
+                    this.showLoading(false);
+                }, 5000);
             };
             reader.onerror = () => {
                 toaster.error(t('importExport:import.error.read'));
